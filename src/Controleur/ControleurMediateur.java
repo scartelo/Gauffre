@@ -47,13 +47,16 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     void restart(){
         System.out.println("restart");
+        jeu.restart();
     }
 
     void refaire(){
         System.out.println("refaire");
+        jeu.coup_refaire();
     }
     void annule(){
         System.out.println("annule");
+        jeu.coup_precedent();
     }
 
 

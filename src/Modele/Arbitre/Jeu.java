@@ -2,7 +2,6 @@ package Modele.Arbitre;
 import Structures.*;
 import Modele.Joueur.IAAleatoire;
 import Patterns.Observable;
-
 import java.awt.*;
 
 public class Jeu extends Observable {
@@ -29,12 +28,13 @@ public class Jeu extends Observable {
             for (int j=c; j<plateau.colonnes() ; j++){
                 if (plateau.estJouable(i,j)) {
                     plateau.croquer(i,j);
-                    miseAJour();
+
                 }
             }
         }
         tour = (tour + 1) % 2;
         plateau.historique.H_ajouter(l,c);
+        miseAJour();
     }
 
     public boolean estTermine(){
@@ -47,7 +47,34 @@ public class Jeu extends Observable {
         }
         return true;
     }
+    public void restart() {
+        plateau = new PlateauDeJeu();
+        tour=0;
+        miseAJour();
+    }
+    public void coup_refaire(){
+        int taille=plateau.historique.getTaille()-1;
+        int i=plateau.historique.get_i(taille);
+        int j=plateau.historique.get_j(taille);
+        joue(i,j);
+    }
+    public void coup_precedent(){
+        Historique H=plateau.historique;
+        restart();
+        plateau.historique=H;
+        int taille=plateau.historique.getTaille()-1;
+        for(int ite=0;ite<=taille;ite++){
+            for (int i=plateau.historique.get_i(ite); i<plateau.lignes() ; i++){
+                for (int j=plateau.historique.get_j(ite); j<plateau.colonnes() ; j++){
+                    plateau.croquer(i,j);
+                }
+            }
+        }
+        tour = (tour + 1) % 2;
+        miseAJour();
+        plateau.historique.dec_taille();
 
+    }
     public int tour(){
         return tour;
     }

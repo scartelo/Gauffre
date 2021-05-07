@@ -26,4 +26,21 @@ public class Historique {
             }
         }
     }
+    public int get_i(int i){
+        return historique[i][0];
+    }
+    public void inc_taille(){
+        taille++;
+    }
+    public void dec_taille(){
+        if(taille>0) {
+            taille=taille-1;
+        }
+    }
+    public int get_j(int i){
+        return historique[i][1];
+    }
+    public int getTaille(){
+        return taille;
+    }
 }
