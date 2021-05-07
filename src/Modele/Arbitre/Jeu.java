@@ -53,10 +53,13 @@ public class Jeu extends Observable {
         miseAJour();
     }
     public void coup_refaire(){
-        int taille=plateau.historique.getTaille()-1;
-        int i=plateau.historique.get_i(taille);
-        int j=plateau.historique.get_j(taille);
-        joue(i,j);
+        int taille=plateau.historique.getTaille();
+        int taille_max=plateau.historique.getTailleMax();
+        if(taille<taille_max) {
+            int i = plateau.historique.get_i(taille);
+            int j = plateau.historique.get_j(taille);
+            joue(i, j);
+        }
     }
     public void coup_precedent(){
         int taille=plateau.historique.getTaille();
