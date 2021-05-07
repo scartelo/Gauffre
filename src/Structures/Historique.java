@@ -3,9 +3,11 @@ package Structures;
 public class Historique {
     int[][] historique;
     int taille;
+    int taille_max;
 
     public Historique(int l, int c){
         taille=0;
+        taille_max=0;
         historique=new int[l*c][2];
     }
 
@@ -13,6 +15,9 @@ public class Historique {
         historique[taille][0]=i;
         historique[taille][1]=j;
         taille=taille+1;
+        if(taille>taille_max){
+            taille_max=taille;
+        }
     }
     public void H_supprimer() {
         if (taille > 0) {
@@ -42,5 +47,8 @@ public class Historique {
     }
     public int getTaille(){
         return taille;
+    }
+    public int getTailleMax(){
+        return taille_max;
     }
 }
