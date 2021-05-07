@@ -1,16 +1,17 @@
 package Modele.Arbitre;
-
+import Structures.*;
 import Patterns.Observable;
 
 public class PlateauDeJeu{
     int [][] grille;
     int lignes, colonnes;
-
+    Historique historique;
 
     public PlateauDeJeu(){
         lignes = 6;
         colonnes = 8;
         grille = new int[lignes][colonnes];
+        historique = new Historique(lignes,colonnes);
         dessineGrille();
     }
 
