@@ -1,5 +1,5 @@
 package Modele.Arbitre;
-
+import Structures.*;
 import Modele.Joueur.IAAleatoire;
 import Patterns.Observable;
 
@@ -11,6 +11,7 @@ public class Jeu extends Observable {
     int tour;
     IAAleatoire ia;
 
+
     public Jeu(PlateauDeJeu p){
         joueur1 = false;
         joueur2 = false;
@@ -19,7 +20,6 @@ public class Jeu extends Observable {
         plateau = p;
         ia = new IAAleatoire(this);
     }
-
     public boolean estJoueurIA(boolean joueur){
         return joueur == true;
     }
@@ -29,11 +29,12 @@ public class Jeu extends Observable {
             for (int j=c; j<plateau.colonnes() ; j++){
                 if (plateau.estJouable(i,j)) {
                     plateau.croquer(i,j);
-                    tour = (tour + 1) % 2;
                     miseAJour();
                 }
             }
         }
+        tour = (tour + 1) % 2;
+        plateau.historique.H_ajouter(l,c);
     }
 
     public boolean estTermine(){
