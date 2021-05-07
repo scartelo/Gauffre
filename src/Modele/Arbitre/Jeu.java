@@ -1,88 +1,74 @@
 package Modele.Arbitre;
 
-public class Jeu {
-    int [][] grille;
+import Modele.Joueur.IAAleatoire;
+import Patterns.Observable;
+
+import java.awt.*;
+
+public class Jeu extends Observable {
+    private boolean joueur1, joueur2, iaActive;
+    PlateauDeJeu plateau;
     int tour;
-    int lignes, colonnes;
+    IAAleatoire ia;
 
-
-    Jeu(int l, int c){
-        lignes = l;
-        colonnes = c;
+    public Jeu(PlateauDeJeu p){
+        joueur1 = false;
+        joueur2 = false;
+        iaActive = true;
         tour = 0;
-        grille = new int[lignes][colonnes];
-        dessineGrille();
+        plateau = p;
+        ia = new IAAleatoire(this);
     }
 
-    void dessineGrille(){
-        for (int i=0; i<lignes; i++){
-            for (int j=0; j<colonnes; j++){
-                if (i == 0 && j==0)
-                    grille[i][j] = -1;
-                else
-                    grille[i][j] = 1;
+    public boolean estJoueurIA(boolean joueur){
+        return joueur == true;
+    }
+
+    public void joue(int l, int c){
+        for (int i=l; i<plateau.lignes() ; i++){
+            for (int j=c; j<plateau.colonnes() ; j++){
+                if (plateau.estJouable(i,j)) {
+                    plateau.croquer(i,j);
+                    tour = (tour + 1) % 2;
+                    miseAJour();
+                }
             }
         }
     }
 
-    public int contenu(int l, int c){
-        return grille[l][c];
-    }
-
-    public int lignes(){
-        return lignes;
-    }
-
-    public int colonnes(){
-        return colonnes;
-    }
-    public int tour(){
-        return tour;
-    }
-    public boolean estAccessible(int l, int c){
-        return (l>=0 && l<lignes && c>=0 && c<colonnes);
-    }
-
-    public boolean estJouable(int l, int c){
-        return estAccessible(l,c) && contenu(l,c) != 0;
-    }
-    public void joue(int l, int c){
-            for (int i=l; i<lignes ; i++){
-                for (int j=c; j<colonnes ; j++){
-                    if (estJouable(i,j)) {
-                        grille[i][j] = 0;
-                        tour = (tour + 1) % 2;
-                    }
-                }
-            }
-    }
     public boolean estTermine(){
-        for (int i=0; i<lignes; i++){
-            for (int j=0; j<colonnes; j++){
-                if ( grille[0][0] == -1 && grille[i][j] == 1){
-                        return false;
+        for (int i=0; i<plateau.lignes(); i++){
+            for (int j=0; j<plateau.colonnes(); j++){
+                if ( plateau.contenu(0,0) == -1 && plateau.contenu(i,j) == 1){
+                    return false;
                 }
             }
         }
         return true;
     }
 
-    public void afficher(){
-        //String s = "";
-
-        for (int i=0; i<lignes(); i++){
-            //s += "|";
-            for (int j=0; j<colonnes(); j++){
-                /*if (grille[i][j] == -1)
-                    s += " @";
-                else if (grille[i][j] == 0)
-                    s += " ";
-                else
-                    s += "x";*/
-                System.out.print(grille[i][j] + " ");
-            }
-            //s += " |";
-            System.out.println();
-        }
+    public int tour(){
+        return tour;
     }
+
+    public PlateauDeJeu plateau(){
+        return plateau;
+    }
+
+    public int contenu(int i, int j){
+        return plateau.contenu(i,j);
+    }
+
+    public boolean estTourIA(){
+        return tour == 1;
+    }
+
+    public boolean IAActive(){
+        return iaActive;
+    }
+
+    public IAAleatoire ia(){
+        return ia;
+    }
+
 }
