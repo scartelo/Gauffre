@@ -7,9 +7,9 @@ public class PlateauDeJeu{
     int lignes, colonnes;
 
 
-    public PlateauDeJeu(int l, int c){
-        lignes = l;
-        colonnes = c;
+    public PlateauDeJeu(){
+        lignes = 6;
+        colonnes = 8;
         grille = new int[lignes][colonnes];
         dessineGrille();
     }
@@ -17,6 +17,7 @@ public class PlateauDeJeu{
     void dessineGrille(){
         for (int i=0; i<lignes; i++){
             for (int j=0; j<colonnes; j++){
+                //redimensionne(i,j);
                 if (i == 0 && j==0)
                     grille[i][j] = -1;
                 else
@@ -44,6 +45,32 @@ public class PlateauDeJeu{
         return estAccessible(l,c) && contenu(l,c) != 0;
     }
 
+
+    int ajuste(int c, int i) {
+        while (c <= i) {
+            c *= 2;
+        }
+        return c;
+    }
+
+    void redimensionne(int l, int c) {
+        int oldL = lignes;
+        int oldC = colonnes;
+        if ((oldL <= l) || (oldC <= c)) {
+            int newL = ajuste(oldL, l);
+            int newC = ajuste(oldC, c);
+            int [][] newTab = new int[newL][newC];
+            for (int i=0; i<oldL; i++)
+                for (int j=0; j<oldC; j++) {
+                    newTab[i][j] = grille[i][j];
+                    lignes = i;
+                    colonnes = j;
+                }
+            grille = newTab;
+
+
+        }
+    }
 
     public void afficher(){
         //String s = "";

@@ -10,4 +10,6 @@ public interface CollecteurEvenements {
     void jouerCoup(Coup coup);
 
     public void fixerIU(InterfaceUtilisateur iu);
+
+    boolean commande(String commande);
 }

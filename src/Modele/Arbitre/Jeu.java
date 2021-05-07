@@ -29,11 +29,12 @@ public class Jeu extends Observable {
             for (int j=c; j<plateau.colonnes() ; j++){
                 if (plateau.estJouable(i,j)) {
                     plateau.croquer(i,j);
-                    tour = (tour + 1) % 2;
-                    miseAJour();
+
                 }
             }
         }
+        tour = (tour + 1) % 2;
+        miseAJour();
     }
 
     public boolean estTermine(){

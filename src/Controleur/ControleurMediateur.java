@@ -41,4 +41,38 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void fixerIU(InterfaceUtilisateur iu) {
         this.iu = iu;
     }
+
+
+
+
+    void restart(){
+        System.out.println("restart");
+    }
+
+    void refaire(){
+        System.out.println("refaire");
+    }
+    void annule(){
+        System.out.println("annule");
+    }
+
+
+    @Override
+    public boolean commande(String c){
+        switch(c){
+            case "restart":
+                restart();
+                break;
+            case "annule":
+                annule();
+                break;
+            case "refaire":
+                refaire();
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+
 }
