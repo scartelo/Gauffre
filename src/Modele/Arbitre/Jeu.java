@@ -59,21 +59,25 @@ public class Jeu extends Observable {
         joue(i,j);
     }
     public void coup_precedent(){
-        Historique H=plateau.historique;
-        restart();
-        plateau.historique=H;
-        int taille=plateau.historique.getTaille()-1;
-        for(int ite=0;ite<=taille;ite++){
-            for (int i=plateau.historique.get_i(ite); i<plateau.lignes() ; i++){
-                for (int j=plateau.historique.get_j(ite); j<plateau.colonnes() ; j++){
-                    plateau.croquer(i,j);
+        int taille=plateau.historique.getTaille();
+        if(taille>0) {
+            taille=taille-1;
+            Historique H = plateau.historique;
+            int tour_tmp = tour;
+            restart();
+            tour = tour_tmp;
+            plateau.historique = H;
+            for (int ite = 0; ite < taille; ite++) {
+                for (int i = plateau.historique.get_i(ite); i < plateau.lignes(); i++) {
+                    for (int j = plateau.historique.get_j(ite); j < plateau.colonnes(); j++) {
+                        plateau.croquer(i, j);
+                    }
                 }
             }
+            tour = (tour + 1) % 2;
+            miseAJour();
+            plateau.historique.dec_taille();
         }
-        tour = (tour + 1) % 2;
-        miseAJour();
-        plateau.historique.dec_taille();
-
     }
     public int tour(){
         return tour;
