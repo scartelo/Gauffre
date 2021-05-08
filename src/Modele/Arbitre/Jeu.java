@@ -23,15 +23,18 @@ public class Jeu extends Observable {
         return joueur == true;
     }
 
-    public void joue(int l, int c){
-        for (int i=l; i<plateau.lignes() ; i++){
-            for (int j=c; j<plateau.colonnes() ; j++){
-                if (plateau.estJouable(i,j)) {
-                    plateau.croquer(i,j);
+    public void jouez(int l, int c){
+        for (int i=l; i<plateau.lignes() ; i++) {
+            for (int j = c; j < plateau.colonnes(); j++) {
+                if (plateau.estJouable(i, j)) {
+                    plateau.croquer(i, j);
 
                 }
             }
         }
+    }
+    public void joue(int l, int c){
+        jouez(l,c);
         tour = (tour + 1) % 2;
         plateau.historique.H_ajouter(l,c);
         miseAJour();
@@ -71,11 +74,9 @@ public class Jeu extends Observable {
             tour = tour_tmp;
             plateau.historique = H;
             for (int ite = 0; ite < taille; ite++) {
-                for (int i = plateau.historique.get_i(ite); i < plateau.lignes(); i++) {
-                    for (int j = plateau.historique.get_j(ite); j < plateau.colonnes(); j++) {
-                        plateau.croquer(i, j);
-                    }
-                }
+                int i = plateau.historique.get_i(ite);
+                int j = plateau.historique.get_j(ite);
+                jouez(i,j);
             }
             tour = (tour + 1) % 2;
             miseAJour();
