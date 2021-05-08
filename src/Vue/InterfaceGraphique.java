@@ -11,10 +11,12 @@ import java.awt.event.ActionListener;
 
 public class InterfaceGraphique implements Runnable, InterfaceUtilisateur, Observateur {
     Jeu jeu;
+    String input;
     int tour;
     JLabel label_joueur1,label_joueur2;
-    JButton annuler, refaire,restart,sauvegarde;
+    JButton annuler, refaire,restart,sauvegarde,loadbut;
     JeuGraphique jeuGraphique;
+    JTextField jt;
     CollecteurEvenements controle;
     private boolean maximized;
     private JFrame frame;
@@ -22,6 +24,13 @@ public class InterfaceGraphique implements Runnable, InterfaceUtilisateur, Obser
     public InterfaceGraphique(Jeu j, CollecteurEvenements c){
         label_joueur1=createLabel("X  Joueur 1");
         label_joueur2=createLabel("Joueur 2");
+
+        //Boite dialogue load
+        jt=new JTextField("");
+        jt.setSize(new Dimension(20,3));
+        jt.setMinimumSize(new Dimension(20,3));
+        jt.setMaximumSize(new Dimension(20,3));
+
         controle = c;
         jeu = j;
         jeu.ajouteObservateur(this);
@@ -81,18 +90,21 @@ public class InterfaceGraphique implements Runnable, InterfaceUtilisateur, Obser
         barreLaterale.add(sauvegarde);
         barreLaterale.add(Box.createGlue());
 
-        JTextField jt = new JTextField(5);
-        jt.setSize(new Dimension(20,3));
-        jt.setMinimumSize(new Dimension(20,3));
-        jt.setMaximumSize(new Dimension(20,3));
+
+
+
+        jt.setPreferredSize(new Dimension(40,30));
+        jt.setMinimumSize(new Dimension(40,30));
+        jt.setMaximumSize(new Dimension(40,30));
+
 
         jt.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 String input = jt.getText();
-                System.out.println(input);
-                ControleurMediateur.load(input);
+                controle.commandeInput("load",input);
             }
         });
+
 
         barreLaterale.add(jt);
 

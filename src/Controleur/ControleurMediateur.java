@@ -64,9 +64,8 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("save");
     }
 
-    public static void load(String c){
-        System.out.println("load");
-        System.out.println(c);
+    void load(String c){
+        System.out.println("load  " + c);
     }
 
     @Override
@@ -91,6 +90,19 @@ public class ControleurMediateur implements CollecteurEvenements {
                 return false;
         }
         return true;
+    }
+
+    @Override
+    public void commandeInput(String commande,String input) {
+        switch(commande){
+            case "load":
+                load(input);
+                break;
+            default:
+
+        }
+
+
     }
 
 }

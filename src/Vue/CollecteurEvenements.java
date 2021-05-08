@@ -12,4 +12,6 @@ public interface CollecteurEvenements {
     public void fixerIU(InterfaceUtilisateur iu);
 
     boolean commande(String commande);
+
+    void commandeInput(String commande,String input);
 }
