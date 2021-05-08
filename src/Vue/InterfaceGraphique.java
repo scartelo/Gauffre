@@ -1,16 +1,19 @@
 package Vue;
 
+import Controleur.ControleurMediateur;
 import Modele.Arbitre.Jeu;
 import Patterns.Observateur;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InterfaceGraphique implements Runnable, InterfaceUtilisateur, Observateur {
     Jeu jeu;
     int tour;
     JLabel label_joueur1,label_joueur2;
-    JButton annuler, refaire,restart;
+    JButton annuler, refaire,restart,sauvegarde;
     JeuGraphique jeuGraphique;
     CollecteurEvenements controle;
     private boolean maximized;
@@ -71,6 +74,29 @@ public class InterfaceGraphique implements Runnable, InterfaceUtilisateur, Obser
         annulRef.add(annuler);
         annulRef.add(refaire);
         barreLaterale.add(annulRef);
+
+        barreLaterale.add(Box.createGlue());
+
+        sauvegarde = createButton("Save","save");
+        barreLaterale.add(sauvegarde);
+        barreLaterale.add(Box.createGlue());
+
+        JTextField jt = new JTextField(5);
+        jt.setSize(new Dimension(20,3));
+        jt.setMinimumSize(new Dimension(20,3));
+        jt.setMaximumSize(new Dimension(20,3));
+
+        jt.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                String input = jt.getText();
+                System.out.println(input);
+                ControleurMediateur.load(input);
+            }
+        });
+
+        barreLaterale.add(jt);
+
+        barreLaterale.add(Box.createGlue());
 
         barreLaterale.add(Box.createGlue());
         restart = createButton("Recommencer", "restart");

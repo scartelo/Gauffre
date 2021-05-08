@@ -19,6 +19,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void joue(int l, int c){
         Coup coup = null;
+        System.out.println("joueIA");
         if (jeu.IAActive() && jeu.estTourIA()) {
             coup = jeu.ia().joue();
             jouerCoup(coup);
@@ -59,6 +60,14 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeu.coup_precedent();
     }
 
+    void save(){
+        System.out.println("save");
+    }
+
+    public static void load(String c){
+        System.out.println("load");
+        System.out.println(c);
+    }
 
     @Override
     public boolean commande(String c){
@@ -71,6 +80,12 @@ public class ControleurMediateur implements CollecteurEvenements {
                 break;
             case "refaire":
                 refaire();
+                break;
+            case "save":
+                save();
+                break;
+            case "5":
+                load(c);
                 break;
             default:
                 return false;
