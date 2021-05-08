@@ -19,6 +19,7 @@ public class Historique {
             taille_max=taille;
         }
     }
+
     public void H_supprimer() {
         if (taille > 0) {
             taille = taille - 1;
@@ -26,13 +27,16 @@ public class Historique {
     }
     public void afficher(){
         for(int i=0;i<taille;i++){
-            for(int j=0;j<2;j++){
-                System.out.println(historique[i][j]);
-            }
+            System.out.print(historique[i][0] + " ");
+            System.out.println(historique[i][1]);
         }
     }
+
     public int get_i(int i){
         return historique[i][0];
+    }
+    public int get_j(int i){
+        return historique[i][1];
     }
     public void inc_taille(){
         taille++;
@@ -42,9 +46,7 @@ public class Historique {
             taille=taille-1;
         }
     }
-    public int get_j(int i){
-        return historique[i][1];
-    }
+
     public int getTaille(){
         return taille;
     }

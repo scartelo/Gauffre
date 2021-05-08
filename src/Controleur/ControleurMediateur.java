@@ -2,8 +2,10 @@ package Controleur;
 
 import Modele.Arbitre.Jeu;
 import Modele.Joueur.Coup;
+import Structures.Saves;
 import Vue.CollecteurEvenements;
 import Vue.InterfaceUtilisateur;
+import java.util.*;
 
 public class ControleurMediateur implements CollecteurEvenements {
     Jeu jeu;
@@ -60,12 +62,20 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeu.coup_precedent();
     }
 
-    void save(){
-        System.out.println("save");
+    void save() {
+        System.out.println("saving");
+        Saves save = new Saves();
+        save.set_save(jeu.plateau());
+        save.write_save();
     }
-
     void load(String c){
-        System.out.println("load  " + c);
+        int s = Integer.parseInt(c);
+        Saves save = new Saves();
+        List<Integer> l = save.get_n_saves();
+        if (l.contains(s)) {
+            save.read_save(s);
+            save.load_save(jeu);
+        }
     }
 
     @Override
@@ -82,9 +92,6 @@ public class ControleurMediateur implements CollecteurEvenements {
                 break;
             case "save":
                 save();
-                break;
-            case "5":
-                load(c);
                 break;
             default:
                 return false;

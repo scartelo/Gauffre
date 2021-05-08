@@ -1,13 +1,13 @@
 package Vue;
 
-import Controleur.ControleurMediateur;
 import Modele.Arbitre.Jeu;
 import Patterns.Observateur;
-
+import Structures.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class InterfaceGraphique implements Runnable, InterfaceUtilisateur, Observateur {
     Jeu jeu;
@@ -85,10 +85,23 @@ public class InterfaceGraphique implements Runnable, InterfaceUtilisateur, Obser
         barreLaterale.add(annulRef);
 
         barreLaterale.add(Box.createGlue());
-
         sauvegarde = createButton("Save","save");
         barreLaterale.add(sauvegarde);
         barreLaterale.add(Box.createGlue());
+
+        Saves save=new Saves();
+        int n_save=1;
+        String saves="";
+        int nb_saves=save.get_nbsaves();
+        JMenuBar m_bar= new JMenuBar();
+        JMenu m = new JMenu("Sauvegardes");
+        String[] l=save.get_saves();
+        for(int i=0;i<l.length;i++){
+            JMenuItem item = new JMenuItem(saves+" "+l[i]);
+            m.add(item);
+        }
+        m_bar.add(m);
+        frame.setJMenuBar(m_bar);
 
 
 

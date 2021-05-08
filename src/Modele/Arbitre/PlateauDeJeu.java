@@ -26,7 +26,9 @@ public class PlateauDeJeu{
             }
         }
     }
-
+    public void set_hist(Historique H ){
+        historique=H;
+    }
     public int contenu(int l, int c){
         return grille[l][c];
     }
@@ -46,6 +48,9 @@ public class PlateauDeJeu{
         return estAccessible(l,c) && contenu(l,c) != 0;
     }
 
+    public Historique get_hist(){
+        return historique;
+    }
 
     int ajuste(int c, int i) {
         while (c <= i) {

@@ -28,18 +28,21 @@ public class Jeu extends Observable {
             for (int j = c; j < plateau.colonnes(); j++) {
                 if (plateau.estJouable(i, j)) {
                     plateau.croquer(i, j);
-
                 }
             }
         }
     }
     public void joue(int l, int c){
-        jouez(l,c);
-        tour = (tour + 1) % 2;
-        plateau.historique.H_ajouter(l,c);
-        miseAJour();
+        if (plateau.estJouable(l, c)) {
+            jouez(l, c);
+            tour = (tour + 1) % 2;
+            plateau.historique.H_ajouter(l, c);
+            miseAJour();
+        }
     }
-
+    public void set_plateau(PlateauDeJeu p){
+        plateau=p;
+    }
     public boolean estTermine(){
         for (int i=0; i<plateau.lignes(); i++){
             for (int j=0; j<plateau.colonnes(); j++){
@@ -55,6 +58,7 @@ public class Jeu extends Observable {
         tour=0;
         miseAJour();
     }
+
     public void coup_refaire(){
         int taille=plateau.historique.getTaille();
         int taille_max=plateau.historique.getTailleMax();
